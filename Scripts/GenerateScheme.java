@@ -28,6 +28,8 @@ public class GenerateScheme {
         } catch (IOException e) {
             System.out.println("File IO error occurred: " + e.getMessage());
         }
+
+        System.out.println("trie average path length: " + t.averagePathLength());
     }
 
     private static Map<CallNumber, Integer> generateScheme() {
@@ -58,77 +60,5 @@ public class GenerateScheme {
         }
         
         return callNumber;
-    }
-}
-
-class Trie {
-    TrieNode root;
-
-    // TODO generate a random trie schema
-    public Trie() {
-        this.root = null;
-    }
-
-    // import a trie schema
-    public Trie(Map<CallNumber, Integer> scheme) {
-        for (CallNumber key : scheme.keySet()) {
-            this.root = this.addNode(key.path, scheme.get(key));
-        }
-    }
-
-    private TrieNode addNode(String path, int value) {
-        return addNode(this.root, null, path, value);
-    }
-
-    private TrieNode addNode(TrieNode root, TrieNode parent, String path, int value) {
-        // if the path is empty, this is the node with value
-        if (path.length() == 0) {
-            // if the root exists, it was originally constructed as a branch,
-            // but branches can have value (more generic class numbers can have
-            // resources in them), so we just update the value 
-            if (root != null) {
-                root.value = value;
-                return root;
-            } else {
-                return new TrieNode(parent, value);
-            }
-        }
-
-        // if this spot is null, create this spot
-        if (root == null) {
-            root = new TrieNode(parent, -1);
-        }
-
-        // ascii offset for '0' is 48: https://www.cs.cmu.edu/~pattis/15-1XX/common/handouts/ascii.html
-        int spot = (int) path.charAt(0) - 48;
-        root.children[spot] = addNode(root.children[spot], root, path.substring(1), value);
-        return root;
-    }
-}
-
-class TrieNode {
-    TrieNode[] children;
-    TrieNode parent;
-    int value;
-
-    public TrieNode(TrieNode parent, int value) {
-        this.parent = parent;
-        this.children = new TrieNode[10];
-        this.value = value;
-    }
-}
-
-class CallNumber {
-    public String path;
-
-    public CallNumber(String path) {
-        this.path = path;
-    }
-
-    // we want to turn 23 digit numbers into actual call numbers
-    // of the format 333.9999....
-    @Override
-    public String toString() {
-        return path.substring(0, 3) + "." + path.substring(3);
     }
 }
