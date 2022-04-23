@@ -25,6 +25,14 @@ That leaves the following as the sought goals for this work:
 
 This book blows my mind in so many ways. I LOVE it. I need my own copy.
 
+## Compression
+Given a hierarchical, 1-D classification scheme can be represented by a Trie, naturally methods of compression of a Trie feel relevant to the stated problems of this project. Namely, the goal of demonstrating a classification notation for the resultant _n_-d graph, that its call number lengths must adhere to some storage considerations. 
+
+### References
+> Steffen Heinz, Justin Zobel, and Hugh E. Williams. 2002. Burst tries: a fast, efficient data structure for string keys. ACM Trans. Inf. Syst. 20, 2 (April 2002), 192–223. DOI:https://doi-org.offcampus.lib.washington.edu/10.1145/506309.506312
+
+Although a burst trie sounds tempting to use (see introduction for relevancy to classification schemes), it seeks to compress full sections into BSTs (binary search trees) or other sortable structues. This decision is not relevant to classification schemes because it doesn't present an intiutive knowledge representation (violating goal #1 of this project). The reason a burst trie violates goal #1 is because shifting from a trie to a _more_ restrictive graph structure (tries can have size _m_ children, where _m_ is the size of the alphabet, BSTs can only have 2 children) elongates the call numbers and does not match the universe of knowledge having potentially > 2 "is a" relationships per concept.
+
 ## Faceted Classification
 
 ### (Future) References
