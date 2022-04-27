@@ -15,6 +15,7 @@ public class GenerateScheme {
         // the keys in this map represent the trie encoding
         Map<CallNumber, Integer> scheme = generateScheme();
         Trie t = new Trie(scheme);
+        BinarySearchTree bst = new BinarySearchTree(t);
         
         try {
             FileWriter f = new FileWriter("scheme.txt");
@@ -30,10 +31,11 @@ public class GenerateScheme {
         }
 
         System.out.println("trie average path length: " + t.averagePathLength());
+        System.out.println("bst average path length:  " + bst.averagePathLength());
     }
 
     private static Map<CallNumber, Integer> generateScheme() {
-        int size = (int) Math.pow(10, 5);
+        int size = (int) Math.pow(10, 2); // that's enough slices!!
         Map<CallNumber, Integer> result = new HashMap<CallNumber, Integer>();
         Random r = new Random();
         for (int i = 0; i < size; i++) {

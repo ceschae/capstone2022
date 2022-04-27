@@ -7,8 +7,8 @@ import java.util.Map;
 import java.util.Set;
 
 public class Trie implements Graph {
-    TrieNode root;
-    Set<TrieNode> nodes;
+    private TrieNode root;
+    private Set<TrieNode> nodes;
 
     // TODO generate a random trie schema
     public Trie() {
@@ -22,6 +22,10 @@ public class Trie implements Graph {
         for (CallNumber key : scheme.keySet()) {
             this.root = this.addNode(key.path, scheme.get(key));
         }
+    }
+
+    public Set<TrieNode> getNodes() {
+        return new HashSet<TrieNode>(this.nodes);
     }
 
     private TrieNode addNode(String path, int value) {
@@ -85,7 +89,8 @@ public class Trie implements Graph {
                         // e.g. 653.256 to 651.005 has a distance of 8
                         // 6 -> 5 -> 2 -> 3 -> 5 -> 1 -> 0 -> 0 -> 5
                         int distance = (i.fullPath.length() - pos) + (j.fullPath.length() - pos);
-                        totalDistance.add(new BigInteger(distance + ""));
+                        BigInteger newDistance = new BigInteger(distance + "");
+                        totalDistance = totalDistance.add(newDistance);
                     }
                 }
             } else {
@@ -98,5 +103,17 @@ public class Trie implements Graph {
         }
 
         return new BigDecimal((1.0 / (size * (size - 1))) + "").multiply(new BigDecimal(totalDistance)).doubleValue();
+    }
+
+    @Override
+    public double clusteringCoefficient() {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    @Override
+    public void outputEncoding() {
+        // TODO Auto-generated method stub
+        
     }
 }
