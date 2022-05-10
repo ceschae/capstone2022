@@ -1,5 +1,6 @@
 package Scripts;
 
+// This class implements a self-balancing binary search tree (BST)
 public class BinarySearchTree implements Graph {
     private BinarySearchNode root;
 

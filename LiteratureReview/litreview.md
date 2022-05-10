@@ -64,6 +64,13 @@ Provides a really nice overview of bias/variance in retrieval systems, in additi
 
 Describes how subject headings (including with automatic classification) help with usability/user experience, and improve retrieval. This resource seems really useful to me, especially since it has a good background section and provides good support for other types of classification schemes.
 
+## Tree Structures
+
+### Binary Search Tree (BST)
+> [https://en.wikipedia.org/wiki/Binary_search_tree](https://en.wikipedia.org/wiki/Binary_search_tree); [https://en.wikipedia.org/wiki/Self-balancing_binary_search_tree](https://en.wikipedia.org/wiki/Self-balancing_binary_search_tree)
+
+### Trie
+
 > [https://en.wikipedia.org/wiki/Trie](https://en.wikipedia.org/wiki/Trie); [https://en.wikipedia.org/wiki/Radix_tree](https://en.wikipedia.org/wiki/Radix_tree)
 
 A hierarchical classification scheme can be represented as a Trie (sometimes referred to as a prefix tree). This is great because now we have a clear computer science structure that we can use to apply tree-based concepts to classification schemes.
