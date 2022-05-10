@@ -1,5 +1,6 @@
 package Scripts;
 
+import java.io.FileWriter;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.HashSet;
@@ -112,7 +113,7 @@ public class Trie implements Graph {
     }
 
     @Override
-    public void outputEncoding() {
+    public void outputEncoding(FileWriter f) {
         // TODO Auto-generated method stub
         
     }

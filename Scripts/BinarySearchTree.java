@@ -1,11 +1,21 @@
 package Scripts;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.util.HashSet;
+import java.util.Set;
+
 // This class implements a self-balancing binary search tree (BST)
 public class BinarySearchTree implements Graph {
     private BinarySearchNode root;
+    private boolean currentEncodingAccurate;
+    private Set<BinarySearchNode> nodes;
 
     // Converts a Trie into a _balanced_ BST
     public BinarySearchTree(Trie t) {
+        this.nodes = new HashSet<BinarySearchNode>();
         for (TrieNode n : t.getNodes()) {
             this.root = addNode(this.root, n);
         }
@@ -13,7 +23,9 @@ public class BinarySearchTree implements Graph {
 
     private BinarySearchNode addNode(BinarySearchNode root, TrieNode n) {
         if (root == null) {
+            currentEncodingAccurate = false;
             root = new BinarySearchNode(n.value, n.fullPath);
+            this.nodes.add(root);
         } else {
             if (n.fullPath.compareTo(root.previousPath) < 0) {
                 // go left, new path is alphabetically "earlier" than this node
@@ -91,8 +103,33 @@ public class BinarySearchTree implements Graph {
 
     @Override
     public double averagePathLength() {
-        // TODO Auto-generated method stub
-        return 0;
+        if (!currentEncodingAccurate) {
+            storeBstEncoding(this.root, "");
+        }
+        // l = 1/(n * (n-1)) * sum(distance(x, y) for all nodes x, y, x!=y)
+        BigInteger totalDistance = new BigInteger("0");
+        double size = 1.0 * this.nodes.size();
+        // for each pair of nodes
+        for (BinarySearchNode i : this.nodes) {
+            for (BinarySearchNode j : this.nodes) {
+                int pos = 0;
+                while (pos < i.currentPath.length() && pos < j.currentPath.length() && 
+                        i.currentPath.charAt(pos) == j.currentPath.charAt(pos)) {
+                    pos++;
+                }
+
+                // num chars up, num chars down
+                // e.g. 1100101 to 111010 has a distance of 9
+                // 1 -> 0 -> 1 -> 0 -> 0 -> 1 -> 1 -> 0 -> 1 -> 0
+                int distance = (i.currentPath.length() - pos) + (j.currentPath.length() - pos);
+                BigInteger newDistance = new BigInteger(distance + "");
+                totalDistance = totalDistance.add(newDistance);
+            }
+
+            System.out.println("total distance after node " + i.currentPath + ": " + totalDistance);
+        }
+
+        return new BigDecimal((1.0 / (size * (size - 1))) + "").multiply(new BigDecimal(totalDistance)).doubleValue();
     }
 
     @Override
@@ -102,9 +139,24 @@ public class BinarySearchTree implements Graph {
     }
 
     @Override
-    public void outputEncoding() {
-        // TODO Auto-generated method stub
-        
+    public void outputEncoding(FileWriter f) {
+        if (!currentEncodingAccurate) {
+            storeBstEncoding(this.root, "");
+        }
+        for (BinarySearchNode node : this.nodes) {
+            try {
+                f.write(node.currentPath + "\n");
+            } catch (IOException e) {
+                System.out.println("File IO Exception occurred: " + e);
+            }
+        }
     }
     
+    private void storeBstEncoding(BinarySearchNode root, String pathSoFar) {
+        if (root != null) {
+            storeBstEncoding(root.left, pathSoFar + "0");
+            root.currentPath = pathSoFar;
+            storeBstEncoding(root.right, pathSoFar + "1");
+        }
+    }
 }

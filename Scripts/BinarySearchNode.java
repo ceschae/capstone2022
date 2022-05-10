@@ -5,6 +5,7 @@ public class BinarySearchNode {
     public BinarySearchNode right;
     public int value;
     public String previousPath;
+    public String currentPath;
     public int height;
 
     public BinarySearchNode(int value, String previousPath) {
