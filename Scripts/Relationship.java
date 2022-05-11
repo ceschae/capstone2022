@@ -22,4 +22,16 @@ public class Relationship {
         this.a = a;
         this.b = b;
     }
+
+    public static String relationshipTypeToString(RelationshipType type) {
+        if (type == RelationshipType.NARROW_BROAD) {
+            return "narrow/broad";
+        } else if (type == RelationshipType.WHOLE_PART) {
+            return "whole/part";
+        } else if (type == RelationshipType.RELATED_SUBJECT) {
+            return "related subject";
+        } else {
+            return "before/after";
+        }
+    }
 }
