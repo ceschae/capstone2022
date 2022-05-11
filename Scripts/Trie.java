@@ -30,6 +30,16 @@ public class Trie implements Graph {
         return new HashSet<TrieNode>(this.nodes);
     }
 
+    public Set<TrieNode> getNonBranchNodes() {
+        Set<TrieNode> result = new HashSet<TrieNode>();
+        for (TrieNode n : this.nodes) {
+            if (n.value != -1) {
+                result.add(n);
+            }
+        }
+        return result;
+    }
+
     private TrieNode addNode(String path, int value) {
         return addNode(this.root, null, path, value, path);
     }

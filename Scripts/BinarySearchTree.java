@@ -16,10 +16,8 @@ public class BinarySearchTree implements Graph {
     // Converts a Trie into a _balanced_ BST
     public BinarySearchTree(Trie t) {
         this.nodes = new HashSet<BinarySearchNode>();
-        for (TrieNode n : t.getNodes()) {
-            if (n.value != -1) {
-                this.root = addNode(this.root, n);
-            }
+        for (TrieNode n : t.getNonBranchNodes()) {
+            this.root = addNode(this.root, n);
         }
     }
 

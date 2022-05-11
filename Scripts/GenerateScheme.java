@@ -10,12 +10,17 @@ public class GenerateScheme {
 
     public static final int MIN_LENGTH = 3;
     public static final int MAX_LENGTH = 23;
+    public static final int NUM_RELATIONSHIPS = 20;
+    public static final int NUM_NODES_POW = 2; // 10 ^ NUM_NODES_POW
+    public static final int NUM_RESOURCES_POW = 5; // 2 ^ NUM_RESOURCES_POW
 
     public static void main(String[] args) {
         // the keys in this map represent the trie encoding
         Map<CallNumber, Integer> scheme = generateScheme();
         Trie t = new Trie(scheme);
         BinarySearchTree bst = new BinarySearchTree(t);
+        OntologyTrie ot = new OntologyTrie(t);
+        ot.addNRelationships(NUM_RELATIONSHIPS);
         
         try {
             FileWriter fTrie = new FileWriter("trie_scheme.txt");
@@ -34,12 +39,12 @@ public class GenerateScheme {
     }
 
     private static Map<CallNumber, Integer> generateScheme() {
-        int size = (int) Math.pow(10, 2); // that's enough slices!!
+        int size = (int) Math.pow(10, NUM_NODES_POW); // that's enough slices!!
         Map<CallNumber, Integer> result = new HashMap<CallNumber, Integer>();
         Random r = new Random();
         for (int i = 0; i < size; i++) {
             String num = generateRandomCallNumber(r);
-            int numResources = r.nextInt((int) Math.pow(2, 5));
+            int numResources = r.nextInt((int) Math.pow(2, NUM_RESOURCES_POW));
 
             result.put(new CallNumber(num), numResources);
         }
